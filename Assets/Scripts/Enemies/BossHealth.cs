@@ -8,9 +8,9 @@ public class BossHealth : MonoBehaviour
 {
     [Header("Boss Health Settings")]
     [SerializeField] private int maxHealth = 100;
+    [SerializeField] private Slider healthSlider; // Direct reference in Inspector
 
     private int currentHealth;
-    private Slider healthSlider;
 
     private void Start()
     {
@@ -20,28 +20,29 @@ public class BossHealth : MonoBehaviour
 
     private void InitializeHealthBar()
     {
-        GameObject canvasObj = GameObject.Find("Canvas");
-        if (canvasObj == null)
+        // Fallback to find it dynamically if not assigned in Inspector
+        if (healthSlider == null)
         {
-            Debug.LogWarning("Canvas not found in scene.");
-            return;
+            GameObject canvasObj = GameObject.Find("Canvas");
+            if (canvasObj != null)
+            {
+                Transform healthBarTransform = canvasObj.transform.Find("BossHealthBar");
+                if (healthBarTransform != null)
+                {
+                    healthSlider = healthBarTransform.GetComponent<Slider>();
+                }
+            }
         }
 
-        Transform healthBarTransform = canvasObj.transform.Find("BossHealthBar");
-        if (healthBarTransform == null)
-        {
-            Debug.LogWarning("BossHealthBar not found as a child of Canvas.");
-            return;
-        }
-
-        GameObject healthBarObj = healthBarTransform.gameObject;
-        healthBarObj.SetActive(true);
-
-        healthSlider = healthBarObj.GetComponent<Slider>();
         if (healthSlider != null)
         {
+            healthSlider.gameObject.SetActive(true);
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
+        }
+        else
+        {
+            Debug.LogWarning("BossHealthBar slider could not be found or assigned.");
         }
     }
 

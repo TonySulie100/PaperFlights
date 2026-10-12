@@ -15,27 +15,9 @@ public class WinManager : MonoBehaviour
     {
         if (youWinPanel == null) return;
 
-        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
-        if (audioManager != null)
+        if (AudioManager.Instance != null)
         {
-            AudioSource[] sources = audioManager.GetComponents<AudioSource>();
-            foreach (AudioSource source in sources)
-            {
-                if (source != null && source.isPlaying)
-                {
-                    source.Stop();
-                }
-            }
-        }
-
-        GameObject bgmObj = GameObject.Find("SceneBGM");
-        if (bgmObj != null)
-        {
-            AudioSource bgmAudio = bgmObj.GetComponent<AudioSource>();
-            if (bgmAudio != null && bgmAudio.isPlaying)
-            {
-                bgmAudio.Stop();
-            }
+            AudioManager.Instance.StopAllAudio();
         }
 
         if (winSFX != null && Camera.main != null)

@@ -1,44 +1,22 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 
-[System.Serializable]
-public class EnemySpawnConfig
-{
-    public string enemyName = "Enemy";
-    public GameObject enemyPrefab;
-
-    [Header("Randomized Spawn Interval (Seconds)")]
-    public float minInterval = 2.5f;
-    public float maxInterval = 3.5f;
-}
-
-/// <summary>
-/// Manages enemy wave spawning configurations, active enemy counts, wave countdowns, and boss spawning.
-/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance { get; private set; }
 
-    [Header("Regular Enemy Settings")]
-    [SerializeField] private EnemySpawnConfig[] enemyConfigs;
-    [SerializeField] private int maxEnemiesToSpawn = 10;
+    [Header("Spawner Settings")]
+    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private float spawnInterval = 2.0f;
+    [SerializeField] private int enemiesPerWave = 10;
 
-    [Header("Boss Settings")]
+    [Header("Boss Encounter")]
     [SerializeField] private GameObject bossPrefab;
-    [SerializeField] private float bossSpawnDelay = 10f;
-    [SerializeField] private Transform bossSpawnPoint;
+    [SerializeField] private float timeBeforeBoss = 30f;
 
-    [Header("Countdown UI Settings")]
-    [SerializeField] private TMP_Text countdownText;
-
-    [Header("Random Y Spawn Area")]
-    [SerializeField] private float spawnX = 10f;
-    [SerializeField] private float minY = -3.5f;
-    [SerializeField] private float maxY = 3.5f;
-
-    private int spawnedCount;
-    private int activeEnemyCount;
+    private int spawnedCount = 0;
+    private int activeEnemyCount = 0;
+    private bool isBossSpawned = false;
 
     private void Awake()
     {
@@ -54,90 +32,50 @@ public class EnemySpawner : MonoBehaviour
 
     private void Start()
     {
-        if (countdownText != null)
-        {
-            countdownText.gameObject.SetActive(false);
-        }
-
-        StartCoroutine(MainWaveRoutine());
+        StartCoroutine(SpawnWaveRoutine());
     }
 
-    private IEnumerator MainWaveRoutine()
+    private IEnumerator SpawnWaveRoutine()
     {
-        foreach (var config in enemyConfigs)
+        while (!isBossSpawned && spawnedCount < enemiesPerWave)
         {
-            StartCoroutine(SpawnEnemyTypeRoutine(config));
+            yield return new WaitForSeconds(spawnInterval);
+            SpawnRandomEnemy();
+            spawnedCount++;
         }
 
-        while (spawnedCount < maxEnemiesToSpawn)
+        if (!isBossSpawned)
         {
-            yield return null;
-        }
-
-        while (activeEnemyCount > 0)
-        {
-            yield return null;
-        }
-
-        if (countdownText != null)
-        {
-            countdownText.gameObject.SetActive(true);
-            int countdownInt = Mathf.RoundToInt(bossSpawnDelay);
-
-            for (int i = countdownInt; i > 0; i--)
-            {
-                countdownText.text = i.ToString();
-                yield return new WaitForSeconds(1f);
-            }
-
-            countdownText.gameObject.SetActive(false);
-        }
-        else
-        {
-            yield return new WaitForSeconds(bossSpawnDelay);
-        }
-
-        SpawnBoss();
-    }
-
-    private IEnumerator SpawnEnemyTypeRoutine(EnemySpawnConfig config)
-    {
-        while (spawnedCount < maxEnemiesToSpawn)
-        {
-            float randomDelay = Random.Range(config.minInterval, config.maxInterval);
-            yield return new WaitForSeconds(randomDelay);
-
-            if (spawnedCount < maxEnemiesToSpawn && config.enemyPrefab != null)
-            {
-                SpawnSingleEnemy(config.enemyPrefab);
-            }
+            StartCoroutine(SpawnBossRoutine());
         }
     }
 
-    private void SpawnSingleEnemy(GameObject prefab)
+    private void SpawnRandomEnemy()
     {
-        float randomY = Random.Range(minY, maxY);
-        Vector3 spawnPosition = new Vector3(spawnX, randomY, 0f);
+        if (enemyPrefabs.Length == 0) return;
+        int randomIndex = Random.Range(0, enemyPrefabs.Length);
 
-        Instantiate(prefab, spawnPosition, Quaternion.identity);
-        spawnedCount++;
+        float randomX = Random.Range(-8f, 8f);
+        Vector3 spawnPosition = new Vector3(randomX, transform.position.y, 0f);
+
+        Instantiate(enemyPrefabs[randomIndex], spawnPosition, Quaternion.identity);
         activeEnemyCount++;
+    }
+
+    private IEnumerator SpawnBossRoutine()
+    {
+        isBossSpawned = true;
+        yield return new WaitForSeconds(timeBeforeBoss);
+
+        if (bossPrefab != null)
+        {
+            Instantiate(bossPrefab, transform.position, Quaternion.identity);
+            Debug.Log("Boss Spawned! Triggering boss health UI and music transition.");
+        }
     }
 
     public void OnEnemyDestroyed()
     {
-        activeEnemyCount--;
-        if (activeEnemyCount < 0) activeEnemyCount = 0;
-    }
-
-    private void SpawnBoss()
-    {
-        if (bossPrefab == null) return;
-
-        Vector3 spawnPos = bossSpawnPoint != null
-            ? bossSpawnPoint.position
-            : new Vector3(spawnX, 0f, 0f);
-
-        Instantiate(bossPrefab, spawnPos, Quaternion.identity);
+        activeEnemyCount = Mathf.Max(0, activeEnemyCount - 1);
     }
 }

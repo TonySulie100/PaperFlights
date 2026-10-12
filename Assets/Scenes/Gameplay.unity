@@ -4659,23 +4659,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbec894e37aa344a9d9174c585cdb8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  enemyConfigs:
-  - enemyName: Enemy 1
-    enemyPrefab: {fileID: 2187285567239501938, guid: 97348f7bf23708c4bb9a643e89291a67, type: 3}
-    minInterval: 2.5
-    maxInterval: 3.5
-  - enemyName: Enemy 2
-    enemyPrefab: {fileID: 3665055993943531206, guid: 4fff731994c036e49afc1ccb20d38cc1, type: 3}
-    minInterval: 4.5
-    maxInterval: 5.5
-  maxEnemiesToSpawn: 20
+  enemyPrefabs:
+  - {fileID: 2187285567239501938, guid: 97348f7bf23708c4bb9a643e89291a67, type: 3}
+  - {fileID: 3665055993943531206, guid: 4fff731994c036e49afc1ccb20d38cc1, type: 3}
+  spawnInterval: 2
+  enemiesPerWave: 10
   bossPrefab: {fileID: 5458708114486353438, guid: 060345e6d5adad346b95d2841b34dfe2, type: 3}
-  bossSpawnDelay: 10
-  bossSpawnPoint: {fileID: 0}
-  countdownText: {fileID: 1178997808}
-  spawnX: 10
-  minY: -3.5
-  maxY: 3.5
+  timeBeforeBoss: 30
 --- !u!4 &1211879848
 Transform:
   m_ObjectHideFlags: 0

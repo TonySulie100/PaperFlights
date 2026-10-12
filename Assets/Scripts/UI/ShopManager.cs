@@ -60,22 +60,25 @@ public class ShopManager : MonoBehaviour
 
         for (int i = 0; i < planePrices.Length; i++)
         {
+            // Defensive check to avoid index out of range errors if arrays are misconfigured in the Inspector
+            if (i >= buttonTexts.Length || i >= planeButtons.Length) break;
+
             bool isUnlocked = PlayerPrefs.GetInt("Plane_" + i + "_Unlocked", 0) == 1;
 
             if (selectedPlane == i)
             {
-                buttonTexts[i].text = "Selected";
-                planeButtons[i].interactable = false;
+                if (buttonTexts[i] != null) buttonTexts[i].text = "Selected";
+                if (planeButtons[i] != null) planeButtons[i].interactable = false;
             }
             else if (isUnlocked)
             {
-                buttonTexts[i].text = "Equip";
-                planeButtons[i].interactable = true;
+                if (buttonTexts[i] != null) buttonTexts[i].text = "Equip";
+                if (planeButtons[i] != null) planeButtons[i].interactable = true;
             }
             else
             {
-                buttonTexts[i].text = "$ " + planePrices[i];
-                planeButtons[i].interactable = totalCoins >= planePrices[i];
+                if (buttonTexts[i] != null) buttonTexts[i].text = "$ " + planePrices[i];
+                if (planeButtons[i] != null) planeButtons[i].interactable = totalCoins >= planePrices[i];
             }
         }
     }

@@ -8,19 +8,30 @@ public class BackgroundManager : MonoBehaviour
     [SerializeField] private GameObject background1;
     [SerializeField] private GameObject background2;
     [SerializeField] private float scrollSpeed = 3f;
+    [SerializeField] private float fallbackSpriteWidth = 19.2f; // Fallback if SpriteRenderer is missing
 
     private float spriteWidth;
 
     private void Start()
     {
-        if (background1 == null || background2 == null) return;
+        if (background1 == null || background2 == null)
+        {
+            Debug.LogWarning("BackgroundManager: Background references are not fully assigned!");
+            return;
+        }
 
         SpriteRenderer sr = background1.GetComponent<SpriteRenderer>();
-        if (sr != null)
+        if (sr != null && sr.bounds.size.x > 0f)
         {
             spriteWidth = sr.bounds.size.x;
         }
+        else
+        {
+            spriteWidth = fallbackSpriteWidth;
+            Debug.LogWarning($"BackgroundManager: SpriteRenderer missing or zero size on {background1.name}. Using fallback width: {spriteWidth}");
+        }
 
+        // Align background 2 precisely next to background 1
         background2.transform.position = new Vector3(
             background1.transform.position.x + spriteWidth,
             background1.transform.position.y,

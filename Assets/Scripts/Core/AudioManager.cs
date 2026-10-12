@@ -15,8 +15,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip hoverSound;
     [SerializeField] private AudioClip clickSound;
 
-    private const string MusicVolumeKey = "MusicVolume";
-    private const string SFXVolumeKey = "SFXVolume";
+    public const string MusicVolumeKey = "MusicVolume";
+    public const string SFXVolumeKey = "SFXVolume";
 
     private void Awake()
     {
@@ -48,6 +48,30 @@ public class AudioManager : MonoBehaviour
         musicSource.clip = newClip;
         musicSource.loop = true;
         musicSource.Play();
+    }
+
+    // Centralized audio stop for Win/Game Over screens
+    public void StopAllAudio()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+        {
+            musicSource.Stop();
+        }
+
+        if (sfxSource != null && sfxSource.isPlaying)
+        {
+            sfxSource.Stop();
+        }
+
+        GameObject bgmObj = GameObject.Find("SceneBGM");
+        if (bgmObj != null)
+        {
+            AudioSource bgmAudio = bgmObj.GetComponent<AudioSource>();
+            if (bgmAudio != null && bgmAudio.isPlaying)
+            {
+                bgmAudio.Stop();
+            }
+        }
     }
 
     public void PlayHoverSFX()
