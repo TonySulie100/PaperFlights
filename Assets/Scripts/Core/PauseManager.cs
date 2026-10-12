@@ -71,6 +71,7 @@ public class PauseManager : MonoBehaviour
     public void ResumeGame()
     {
         IsPaused = false;
+
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
 

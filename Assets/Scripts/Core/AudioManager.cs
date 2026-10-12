@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Persistent singleton manager handling global background music and sound effects volume.
+/// Persistent singleton manager handling global background music, sound effects volume, and UI audio feedback.
 /// </summary>
 public class AudioManager : MonoBehaviour
 {
