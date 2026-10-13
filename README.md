@@ -5,15 +5,13 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![itch.io](https://img.shields.io/badge/Play-itch.io-fa5c5c?style=flat&logo=itch.io)](https://tonylie.itch.io/paper-flights)
 
-> **Paper Flights** is a fast-paced, hand-drawn 2D arcade shoot 'em up (shmup) built in Unity 6. Navigate dynamic school and office environments, dodge hazards, leverage a stackable power-up system, and survive until the ultimate boss showdown!
+**Paper Flights** is a fast-paced, hand-drawn 2D arcade shoot 'em up (shmup) built in Unity 6. Navigate dynamic school and office environments, dodge hazards, leverage a stackable power-up system, and survive until the ultimate boss showdown!
 
 ---
 
 ## 🎮 Play & Demonstration
 
 * **Play in Browser:** [Experience Paper Flights live on itch.io](https://tonylie.itch.io/paper-flights)
-
-> *(Tip: Add a high-resolution gameplay GIF or clip here in the future to showcase core combat, power-ups, and boss encounters directly on GitHub!)*
 
 ---
 
@@ -50,7 +48,7 @@ Designed with **clean code principles**, modularity, and separation of concerns 
 | Action | Key / Input |
 | :--- | :--- |
 | **Movement** | Arrow Keys (`Left`, `Right`, `Up`, `Down`) |
-| **Shoot** | `Z` Key / Spacebar |
+| **Shoot** | `Z` Key |
 | **Pause / Settings** | `Escape` Key |
 
 ---
