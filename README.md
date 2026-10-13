@@ -13,7 +13,7 @@
 
 * **Play in Browser:** [Experience Paper Flights live on itch.io](https://tonylie.itch.io/paper-flights)
 
-> *[Insert a high-resolution GIF or short video clip here showing core combat, power-up pickup, and boss encounter]*
+> *(Tip: Add a high-resolution gameplay GIF or clip here in the future to showcase core combat, power-ups, and boss encounters directly on GitHub!)*
 
 ---
 
@@ -61,7 +61,7 @@ Designed with **clean code principles**, modularity, and separation of concerns 
 1. Clone this repository or download it as a ZIP.
 2. Open **Unity Hub** and select **Add project from disk**.
 3. Load the project using **Unity 6** (or a compatible LTS version).
-4. Open the `Main Menu Scene` located in `Assets/_Project/Scenes/` and hit **Play**!
+4. Open the `MainMenu` scene located in `Assets/_Project/Scenes/` and hit **Play**!
 
 ---
 
@@ -69,11 +69,17 @@ Designed with **clean code principles**, modularity, and separation of concerns 
 
 ```text
 Assets/
-├── _Project/
-│   ├── Scripts/
-│   │   ├── Managers/     # Core systems (AudioManager, Game/Pause/Score/Shop Managers)
-│   │   ├── Player/       # Player movement, health, power-ups, and sprite loading
-│   │   ├── Enemies/      # Enemy behaviors, spawner, bullets, and boss mechanics
-│   │   └── UI/           # UI controllers, health displays, and button SFX handlers
-│   ├── Prefabs/          # Reusable game objects (Enemies, Bullets, Pickups, UI elements)
-│   └── Scenes/           # Main menu and gameplay scene files
+└── _Project/
+    ├── Scripts/
+    │   ├── Managers/     # Core systems (AudioManager, Game/Pause/Score/Shop Managers)
+    │   ├── Player/       # Player movement, health, power-ups, and sprite loading
+    │   ├── Enemies/      # Enemy behaviors, spawner, bullets, and boss mechanics
+    │   └── UI/           # UI controllers, health displays, and button SFX handlers
+    ├── Prefabs/          # Reusable game objects (Enemies, Bullets, Pickups, UI elements)
+    └── Scenes/           # Main menu and gameplay scene files
+```
+## 📜 License
+Distributed under the MIT License. See LICENSE for more information.
+
+
+---
