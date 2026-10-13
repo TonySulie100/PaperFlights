@@ -29,8 +29,8 @@ public class SettingsManager : MonoBehaviour
 
     public void LoadSavedSettings()
     {
-        float savedMusic = PlayerPrefs.GetFloat("MusicVolume", 100f);
-        float savedSFX = PlayerPrefs.GetFloat("SFXVolume", 100f);
+        float savedMusic = PlayerPrefs.GetFloat(AudioManager.MusicVolumeKey, 100f);
+        float savedSFX = PlayerPrefs.GetFloat(AudioManager.SFXVolumeKey, 100f);
 
         if (musicSlider != null) musicSlider.value = savedMusic;
         if (sfxSlider != null) sfxSlider.value = savedSFX;
@@ -38,7 +38,7 @@ public class SettingsManager : MonoBehaviour
 
     public void SetMusicVolume(float value)
     {
-        PlayerPrefs.SetFloat("MusicVolume", value);
+        PlayerPrefs.SetFloat(AudioManager.MusicVolumeKey, value);
         PlayerPrefs.Save();
 
         if (AudioManager.Instance != null)
@@ -49,7 +49,7 @@ public class SettingsManager : MonoBehaviour
 
     public void SetSFXVolume(float value)
     {
-        PlayerPrefs.SetFloat("SFXVolume", value);
+        PlayerPrefs.SetFloat(AudioManager.SFXVolumeKey, value);
         PlayerPrefs.Save();
 
         if (AudioManager.Instance != null)

@@ -37,8 +37,8 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerPowerUps powerUps = other.GetComponent<PlayerPowerUps>();
-            if (powerUps != null)
+            // Optimized with TryGetComponent for zero unnecessary memory allocations
+            if (other.TryGetComponent(out PlayerPowerUps powerUps))
             {
                 powerUps.ActivatePowerUp(itemType, activeDuration);
             }

@@ -16,15 +16,15 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        transform.Translate(Vector3.right * speed * Time.deltaTime, Space.World);
+        transform.Translate(Vector3.right * speed * Time.deltaTime, Space.Self);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (enemy != null)
+            // Modern Unity C# pattern using TryGetComponent for zero unnecessary allocations
+            if (other.TryGetComponent(out Enemy enemy))
             {
                 enemy.TakeDamage(damage);
             }

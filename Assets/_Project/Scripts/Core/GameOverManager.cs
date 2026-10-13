@@ -15,17 +15,10 @@ public class GameOverManager : MonoBehaviour
     {
         if (gameOverPanel == null) return;
 
-        AudioManager audioManager = FindFirstObjectByType<AudioManager>();
-        if (audioManager != null)
+        // Use the persistent singleton instead of searching dynamically
+        if (AudioManager.Instance != null)
         {
-            AudioSource[] sources = audioManager.GetComponents<AudioSource>();
-            foreach (AudioSource source in sources)
-            {
-                if (source != null && source.isPlaying)
-                {
-                    source.Stop();
-                }
-            }
+            AudioManager.Instance.StopAllAudio();
         }
 
         if (loseSFX != null && Camera.main != null)

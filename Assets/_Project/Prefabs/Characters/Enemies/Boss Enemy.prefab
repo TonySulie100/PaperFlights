@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BossHealth
   maxHealth: 100
+  healthSlider: {fileID: 0}
 --- !u!114 &8920115700969912620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,4 +247,4 @@ MonoBehaviour:
   firePoint: {fileID: 5969920792669517245}
   fireRate: 1.5
   spreadAngle: 25
-  shootSFX: {fileID: 8300000, guid: 0cc4f8d2c76190b4eb788d644cf9fd3c, type: 3}
+  shootSFX: {fileID: 8300000, guid: ff3726081b4664d448974f36f87b0d50, type: 3}

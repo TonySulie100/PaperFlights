@@ -70,9 +70,18 @@ public class HomingRocket : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            other.SendMessage("TakeDamage", rocketDamage, SendMessageOptions.DontRequireReceiver);
+            // Replaced slow SendMessage with direct, type-safe component calls
+            bool isBoss = false;
 
-            bool isBoss = other.GetComponent<BossHealth>() != null || other.name.ToLower().Contains("boss");
+            if (other.TryGetComponent(out BossHealth bossHealth))
+            {
+                bossHealth.TakeDamage(rocketDamage);
+                isBoss = true;
+            }
+            else if (other.TryGetComponent(out Enemy enemy))
+            {
+                enemy.TakeDamage(rocketDamage);
+            }
 
             if (!isBoss)
             {

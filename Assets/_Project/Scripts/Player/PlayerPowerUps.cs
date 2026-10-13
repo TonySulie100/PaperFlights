@@ -45,13 +45,27 @@ public class PlayerPowerUps : MonoBehaviour
         switch (type)
         {
             case ItemType.TripleShot:
-                if (tripleShotCoroutine != null) StopCoroutine(tripleShotCoroutine);
-                tripleShotCoroutine = StartCoroutine(TripleShotRoutine(duration));
+                if (IsTripleShotActive)
+                {
+                    tripleShotTimeRemaining += duration; // Extend time if already active
+                }
+                else
+                {
+                    if (tripleShotCoroutine != null) StopCoroutine(tripleShotCoroutine);
+                    tripleShotCoroutine = StartCoroutine(TripleShotRoutine(duration));
+                }
                 break;
 
             case ItemType.Shield:
-                if (shieldCoroutine != null) StopCoroutine(shieldCoroutine);
-                shieldCoroutine = StartCoroutine(ShieldRoutine(duration));
+                if (IsShieldActive)
+                {
+                    shieldTimeRemaining += duration;
+                }
+                else
+                {
+                    if (shieldCoroutine != null) StopCoroutine(shieldCoroutine);
+                    shieldCoroutine = StartCoroutine(ShieldRoutine(duration));
+                }
                 break;
 
             case ItemType.Rocket:
@@ -59,15 +73,24 @@ public class PlayerPowerUps : MonoBehaviour
                 break;
 
             case ItemType.Magnet:
-                if (magnetCoroutine != null) StopCoroutine(magnetCoroutine);
-                magnetCoroutine = StartCoroutine(MagnetRoutine(duration));
+                if (IsMagnetActive)
+                {
+                    magnetTimeRemaining += duration;
+                }
+                else
+                {
+                    if (magnetCoroutine != null) StopCoroutine(magnetCoroutine);
+                    magnetCoroutine = StartCoroutine(MagnetRoutine(duration));
+                }
                 break;
         }
 
         if (type != ItemType.Rocket)
         {
-            if (timerCoroutine != null) StopCoroutine(timerCoroutine);
-            timerCoroutine = StartCoroutine(UpdateTimerUIRoutine());
+            if (timerCoroutine == null)
+            {
+                timerCoroutine = StartCoroutine(UpdateTimerUIRoutine());
+            }
         }
     }
 

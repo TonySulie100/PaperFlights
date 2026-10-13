@@ -18,10 +18,14 @@ public class PauseManager : MonoBehaviour
 
     private bool wasBossHealthBarActive;
 
+    private void Awake()
+    {
+        // Ensure static state resets safely on load/awake to prevent cross-scene bugs
+        IsPaused = false;
+    }
+
     private void Start()
     {
-        IsPaused = false;
-
         if (pausePanel != null) pausePanel.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
 

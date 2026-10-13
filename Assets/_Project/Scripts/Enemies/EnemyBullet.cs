@@ -32,8 +32,8 @@ public class EnemyBullet : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
-            if (playerHealth != null)
+            // Modern Unity C# pattern using TryGetComponent to prevent GC allocations
+            if (other.TryGetComponent(out PlayerHealth playerHealth))
             {
                 playerHealth.TakeDamage(damage);
             }

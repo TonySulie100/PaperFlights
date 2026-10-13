@@ -8,7 +8,7 @@ public class BackgroundManager : MonoBehaviour
     [SerializeField] private GameObject background1;
     [SerializeField] private GameObject background2;
     [SerializeField] private float scrollSpeed = 3f;
-    [SerializeField] private float fallbackSpriteWidth = 19.2f; // Fallback if SpriteRenderer is missing
+    [SerializeField] private float fallbackSpriteWidth = 19.2f;
 
     private float spriteWidth;
 
@@ -20,8 +20,7 @@ public class BackgroundManager : MonoBehaviour
             return;
         }
 
-        SpriteRenderer sr = background1.GetComponent<SpriteRenderer>();
-        if (sr != null && sr.bounds.size.x > 0f)
+        if (background1.TryGetComponent(out SpriteRenderer sr) && sr.bounds.size.x > 0f)
         {
             spriteWidth = sr.bounds.size.x;
         }

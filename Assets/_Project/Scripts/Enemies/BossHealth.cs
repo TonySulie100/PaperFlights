@@ -8,7 +8,7 @@ public class BossHealth : MonoBehaviour
 {
     [Header("Boss Health Settings")]
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private Slider healthSlider; // Direct reference in Inspector
+    [SerializeField] private Slider healthSlider;
 
     private int currentHealth;
 
@@ -20,7 +20,7 @@ public class BossHealth : MonoBehaviour
 
     private void InitializeHealthBar()
     {
-        // Fallback to find it dynamically if not assigned in Inspector
+        // Fallback to find it dynamically if not assigned in Inspector (essential for prefabs)
         if (healthSlider == null)
         {
             GameObject canvasObj = GameObject.Find("Canvas");

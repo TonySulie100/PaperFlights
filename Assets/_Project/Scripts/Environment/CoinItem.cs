@@ -25,7 +25,7 @@ public class CoinItem : MonoBehaviour
         if (player != null)
         {
             playerTransform = player.transform;
-            playerPowerUps = player.GetComponent<PlayerPowerUps>();
+            player.TryGetComponent(out playerPowerUps);
         }
     }
 

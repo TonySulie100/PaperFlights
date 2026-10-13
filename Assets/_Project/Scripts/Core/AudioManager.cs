@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -50,7 +51,6 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
-    // Centralized audio stop for Win/Game Over screens
     public void StopAllAudio()
     {
         if (musicSource != null && musicSource.isPlaying)
@@ -61,16 +61,6 @@ public class AudioManager : MonoBehaviour
         if (sfxSource != null && sfxSource.isPlaying)
         {
             sfxSource.Stop();
-        }
-
-        GameObject bgmObj = GameObject.Find("SceneBGM");
-        if (bgmObj != null)
-        {
-            AudioSource bgmAudio = bgmObj.GetComponent<AudioSource>();
-            if (bgmAudio != null && bgmAudio.isPlaying)
-            {
-                bgmAudio.Stop();
-            }
         }
     }
 

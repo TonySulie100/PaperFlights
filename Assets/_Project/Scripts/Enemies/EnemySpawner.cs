@@ -1,6 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Manages enemy wave spawning cycles, boss encounter triggers, and active enemy counts.
+/// </summary>
 public class EnemySpawner : MonoBehaviour
 {
     public static EnemySpawner Instance { get; private set; }
@@ -10,9 +13,13 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 2.0f;
     [SerializeField] private int enemiesPerWave = 10;
 
+    [Header("Spawn Bounds")]
+    [SerializeField] private float minSpawnX = -8f;
+    [SerializeField] private float maxSpawnX = 8f;
+
     [Header("Boss Encounter")]
     [SerializeField] private GameObject bossPrefab;
-    [SerializeField] private float timeBeforeBoss = 30f;
+    [SerializeField] private float timeBeforeBoss = 10f;
 
     private int spawnedCount = 0;
     private int activeEnemyCount = 0;
@@ -27,6 +34,7 @@ public class EnemySpawner : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -52,10 +60,10 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnRandomEnemy()
     {
-        if (enemyPrefabs.Length == 0) return;
-        int randomIndex = Random.Range(0, enemyPrefabs.Length);
+        if (enemyPrefabs == null || enemyPrefabs.Length == 0) return;
 
-        float randomX = Random.Range(-8f, 8f);
+        int randomIndex = Random.Range(0, enemyPrefabs.Length);
+        float randomX = Random.Range(minSpawnX, maxSpawnX);
         Vector3 spawnPosition = new Vector3(randomX, transform.position.y, 0f);
 
         Instantiate(enemyPrefabs[randomIndex], spawnPosition, Quaternion.identity);
@@ -70,7 +78,7 @@ public class EnemySpawner : MonoBehaviour
         if (bossPrefab != null)
         {
             Instantiate(bossPrefab, transform.position, Quaternion.identity);
-            Debug.Log("Boss Spawned! Triggering boss health UI and music transition.");
+            Debug.Log("Boss Spawned!");
         }
     }
 

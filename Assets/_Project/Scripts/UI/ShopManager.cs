@@ -60,7 +60,6 @@ public class ShopManager : MonoBehaviour
 
         for (int i = 0; i < planePrices.Length; i++)
         {
-            // Defensive check to avoid index out of range errors if arrays are misconfigured in the Inspector
             if (i >= buttonTexts.Length || i >= planeButtons.Length) break;
 
             bool isUnlocked = PlayerPrefs.GetInt("Plane_" + i + "_Unlocked", 0) == 1;
